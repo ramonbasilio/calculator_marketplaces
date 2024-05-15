@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
 
-class AmazonPage extends StatefulWidget {
-  const AmazonPage({super.key});
+class AmazonPage4 extends StatefulWidget {
+  const AmazonPage4({super.key});
 
   @override
-  State<AmazonPage> createState() => _AmazonPageState();
+  State<AmazonPage4> createState() => _AmazonPage4State();
 }
 
-class _AmazonPageState extends State<AmazonPage> {
-  final TextEditingController _costProduct = TextEditingController();
+class _AmazonPage4State extends State<AmazonPage4> {
+    final TextEditingController _costProduct = TextEditingController();
   final TextEditingController _margemProduct = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('Amazon'),
+        title: const Text('Amazon Page 4 - Envio Próprio'),
       ),
       body: Container(
         padding: const EdgeInsets.all(20),
