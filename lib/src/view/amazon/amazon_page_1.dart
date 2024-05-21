@@ -1,19 +1,16 @@
 import 'package:calculator_marketplaces/src/calculus/amazon_calc.dart';
-import 'package:calculator_marketplaces/src/shared_preferences/amazon-SP.dart';
 import 'package:flutter/material.dart';
 
-class AmazonPage1 extends StatefulWidget {
-  const AmazonPage1({super.key});
+class AmazonPage01 extends StatefulWidget {
+  const AmazonPage01({super.key});
 
   @override
-  State<AmazonPage1> createState() => _AmazonPageState();
+  State<AmazonPage01> createState() => _AmazonPage01State();
 }
 
-class _AmazonPageState extends State<AmazonPage1> {
+class _AmazonPage01State extends State<AmazonPage01> {
   final TextEditingController _costProduct = TextEditingController();
   final TextEditingController _margemProduct = TextEditingController();
-  final SharedPreference _sharedPreferenceInstance = SharedPreference();
-
   double productValue = 0.0;
   double incomeValue = 0.0;
   double gainValue = 0.0;
@@ -21,96 +18,29 @@ class _AmazonPageState extends State<AmazonPage1> {
   double taxPercent = 0.0;
   double costProduct = 0.0;
   int margemProduct = 0;
-
-  void fetchData() async {
-    await _sharedPreferenceInstance
-        .readDouble(key: 'productValue')
-        .then((double? value) {
-      setState(() {
-        productValue = value!;
-      });
-    });
-    await _sharedPreferenceInstance
-        .readDouble(key: 'incomeValue')
-        .then((double? value) {
-      setState(() {
-        incomeValue = value!;
-      });
-    });
-
-    await _sharedPreferenceInstance
-        .readDouble(key: 'gainValue')
-        .then((double? value) {
-      setState(() {
-        gainValue = value!;
-      });
-    });
-
-    await _sharedPreferenceInstance
-        .readDouble(key: 'taxTotal')
-        .then((double? value) {
-      setState(() {
-        taxTotal = value!;
-      });
-    });
-
-    await _sharedPreferenceInstance
-        .readDouble(key: 'taxPercent')
-        .then((double? value) {
-      setState(() {
-        taxPercent = value!;
-      });
-    });
-
-    await _sharedPreferenceInstance
-        .readDouble(key: 'costProduct')
-        .then((double? value) {
-      setState(() {
-        _costProduct.text = value!.toString();
-      });
-    });
-
-    await _sharedPreferenceInstance
-        .readInt(key: 'margemProduct')
-        .then((int? value) {
-      setState(() {
-        _margemProduct.text = value!.toString();
-      });
-    });
-  }
-
-  @override
-  void initState() {
-    fetchData();
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('Amazon Page 1 - DBA < 79'),
+        title: const Text('Envio Próprio'),
       ),
       body: SingleChildScrollView(
         child: Container(
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.all(20),
           height: MediaQuery.of(context).size.height -
               MediaQuery.of(context).padding.top -
               kToolbarHeight -
               kBottomNavigationBarHeight,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             //INICIO
             children: [
               SizedBox(
+                height: 180,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    productValue > 79
-                        ? const Text('Valor de anúncio maior que 79')
-                        : const SizedBox.shrink(),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -137,7 +67,6 @@ class _AmazonPageState extends State<AmazonPage1> {
                             IconButton(
                                 onPressed: () {
                                   setState(() {
-                                    //_costProduct.text = '0';
                                     _costProduct.clear();
                                   });
                                 },
@@ -156,12 +85,6 @@ class _AmazonPageState extends State<AmazonPage1> {
                               width: 100,
                               height: 80,
                               child: TextFormField(
-                                onFieldSubmitted: (value) {
-                                  SharedPreference().saveData(
-                                      type: 'Int',
-                                      key: 'margem',
-                                      value: int.parse(_margemProduct.text));
-                                },
                                 keyboardType:
                                     const TextInputType.numberWithOptions(
                                         signed: true, decimal: true),
@@ -178,7 +101,6 @@ class _AmazonPageState extends State<AmazonPage1> {
                             IconButton(
                                 onPressed: () {
                                   setState(() {
-                                    //_margemProduct.text = '0';
                                     _margemProduct.clear();
                                   });
                                 },
@@ -190,82 +112,77 @@ class _AmazonPageState extends State<AmazonPage1> {
                   ],
                 ),
               ),
-              SizedBox(
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                height: 140,
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
+                    const SizedBox.shrink(),
                     SizedBox(
-                      height: 80,
+                      height: 40,
                       width: double.infinity,
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            if (_costProduct.text.isNotEmpty &&
-                                _margemProduct.text.isNotEmpty) {
-                              setState(() {
-                                productValue = AmazonCalc.productValue(
-                                    5.5,
-                                    double.parse(_margemProduct.text),
-                                    double.parse(_costProduct.text
-                                        .replaceAll(RegExp(r','), '.')));
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if (_costProduct.text.isNotEmpty &&
+                              _margemProduct.text.isNotEmpty) {
+                            setState(() {
+                              productValue = AmazonCalc.productValue(
+                                  0,
+                                  double.parse(_margemProduct.text),
+                                  double.parse(_costProduct.text
+                                      .replaceAll(RegExp(r','), '.')));
 
-                                gainValue = AmazonCalc.gainValue(
-                                    productValue,
-                                    double.parse(_margemProduct.text),
-                                    double.parse(_costProduct.text
-                                        .replaceAll(RegExp(r','), '.')));
+                              gainValue = AmazonCalc.gainValue(
+                                productValue,
+                                double.parse(_margemProduct.text),
+                                double.parse(
+                                  _costProduct.text
+                                      .replaceAll(RegExp(r','), '.'),
+                                ),
+                                true,
+                              );
 
-                                incomeValue =
-                                    AmazonCalc.incomeValue(productValue, 5.5);
+                              incomeValue =
+                                  AmazonCalc.incomeValue(productValue, 0);
 
-                                taxTotal = AmazonCalc.taxTotal(
-                                    productValue, incomeValue);
+                              taxTotal = AmazonCalc.taxTotal(
+                                  productValue, incomeValue);
 
-                                taxPercent = AmazonCalc.taxPercent(
-                                    productValue, taxTotal);
-                              });
-                              _sharedPreferenceInstance.saveData(
-                                  type: 'Double',
-                                  key: 'costProduct',
-                                  value: double.parse(_costProduct.text));
-                              _sharedPreferenceInstance.saveData(
-                                  type: 'Int',
-                                  key: 'margemProduct',
-                                  value: int.parse(_margemProduct.text));
-                              _sharedPreferenceInstance.saveData(
-                                  type: 'Double',
-                                  key: 'productValue',
-                                  value: productValue);
-                              _sharedPreferenceInstance.saveData(
-                                  type: 'Double',
-                                  key: 'gainValue',
-                                  value: gainValue);
-                              _sharedPreferenceInstance.saveData(
-                                  type: 'Double',
-                                  key: 'incomeValue',
-                                  value: incomeValue);
-                              _sharedPreferenceInstance.saveData(
-                                  type: 'Double',
-                                  key: 'taxTotal',
-                                  value: taxTotal);
-                              _sharedPreferenceInstance.saveData(
-                                  type: 'Double',
-                                  key: 'taxPercent',
-                                  value: taxPercent);
-                            }
-                          },
-                          child: const Text(
-                            'Calcular',
-                            style: TextStyle(fontSize: 20),
-                          ),
+                              taxPercent =
+                                  AmazonCalc.taxPercent(productValue, taxTotal);
+                            });
+                          }
+                        },
+                        child: const Text(
+                          'Calcular',
+                          style: TextStyle(fontSize: 20),
                         ),
                       ),
                     ),
-                    // productValue > 79
-                    //     ? const Text(
-                    //         'Valor de anúncio maior que 79.\n Utilize a próxima calculadora')
-                    //     : const SizedBox.shrink(),
+                    SizedBox(
+                      height: 40,
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            productValue = 0.0;
+                            incomeValue = 0.0;
+                            gainValue = 0.0;
+                            taxTotal = 0.0;
+                            taxPercent = 0.0;
+                            costProduct = 0.0;
+                            margemProduct = 0;
+                            _costProduct.clear();
+                            _margemProduct.clear();
+                          });
+                        },
+                        child: const Text(
+                          'Limpar',
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -305,40 +222,37 @@ class _AmazonPageState extends State<AmazonPage1> {
                         ),
                       ],
                     ),
-                    SizedBox(
-                      width: 100,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'R\$ $productValue',
-                            style: const TextStyle(fontSize: 20),
-                          ),
-                          Text(
-                            'R\$ $incomeValue',
-                            style: const TextStyle(fontSize: 20),
-                          ),
-                          Text(
-                            'R\$ $gainValue',
-                            style: const TextStyle(fontSize: 20),
-                          ),
-                          Text(
-                            'R\$ $taxTotal',
-                            style: const TextStyle(fontSize: 20),
-                          ),
-                          Text(
-                            '$taxPercent %',
-                            style: const TextStyle(fontSize: 20),
-                          ),
-                        ],
-                      ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'R\$ $productValue',
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                        Text(
+                          'R\$ $incomeValue',
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                        Text(
+                          'R\$ $gainValue',
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                        Text(
+                          'R\$ $taxTotal',
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                        Text(
+                          '$taxPercent %',
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                      ],
                     ),
                   ],
                 ),
-              )
+              ),
             ],
-          ),
+          ), //INICIO
         ),
       ),
     );

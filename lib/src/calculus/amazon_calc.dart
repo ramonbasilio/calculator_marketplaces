@@ -4,8 +4,18 @@ class AmazonCalc {
     return double.parse(result.toStringAsFixed(2));
   }
 
-  static double gainValue(double productValue, double margem, double cost) {
-    double result = (productValue - 0.13 * productValue - 5.5 - cost);
+  static double gainValue(
+    double productValue,
+    double margem,
+    double cost, [
+    bool? ep,
+  ]) {
+    double result = 0.0;
+    if (ep!) {
+      result = (productValue - 0.13 * productValue - cost);
+    } else {
+      result = (productValue - 0.13 * productValue - 5.5 - cost);
+    }
     return double.parse(result.toStringAsFixed(2));
   }
 

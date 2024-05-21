@@ -1,7 +1,7 @@
-import 'package:calculator_marketplaces/src/view/amazon/amazon_page_1.dart';
 import 'package:calculator_marketplaces/src/view/amazon/amazon_page_2.dart';
 import 'package:calculator_marketplaces/src/view/amazon/amazon_page_3.dart';
 import 'package:calculator_marketplaces/src/view/amazon/amazon_page_4.dart';
+import 'package:calculator_marketplaces/src/view/amazon/amazon_page_1.dart';
 import 'package:flutter/material.dart';
 
 class AmazonPageMain extends StatefulWidget {
@@ -14,10 +14,10 @@ class AmazonPageMain extends StatefulWidget {
 class _AmazonPageMainState extends State<AmazonPageMain> {
   int indexCurrent = 0;
   final List<Widget> screens = [
-    const AmazonPage1(),
-    const AmazonPage2(),
-    const AmazonPage3(),
-    const AmazonPage4(),
+    const AmazonPage01(),
+    const AmazonPage02(),
+    const AmazonPage03(),
+    const AmazonPage04(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -38,6 +38,11 @@ class _AmazonPageMainState extends State<AmazonPageMain> {
         },
         items: const [
           BottomNavigationBarItem(
+              label: 'ENVIO\nPRÓPRIO',
+              icon: Icon(
+                Icons.abc,
+              )),
+          BottomNavigationBarItem(
               label: 'DBA < R\$ 79',
               icon: Icon(
                 Icons.abc,
@@ -49,11 +54,6 @@ class _AmazonPageMainState extends State<AmazonPageMain> {
               )),
           BottomNavigationBarItem(
               label: 'FBA',
-              icon: Icon(
-                Icons.abc,
-              )),
-          BottomNavigationBarItem(
-              label: 'ENVIO\nPRÓPRIO',
               icon: Icon(
                 Icons.abc,
               )),
