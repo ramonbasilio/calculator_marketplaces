@@ -17,13 +17,16 @@ class _AmazonPage01State extends State<AmazonPage01> {
   double taxTotal = 0.0;
   double taxPercent = 0.0;
   double costProduct = 0.0;
-  int margemProduct = 0;
+  double margemProduct = 0.0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('Envio Próprio'),
+        title: Image.asset(
+          'assets/amazon_logo.png',
+          width: 120,
+        ),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -134,14 +137,21 @@ class _AmazonPage01State extends State<AmazonPage01> {
                                       .replaceAll(RegExp(r','), '.')));
 
                               gainValue = AmazonCalc.gainValue(
-                                productValue,
-                                double.parse(_margemProduct.text),
-                                double.parse(
-                                  _costProduct.text
-                                      .replaceAll(RegExp(r','), '.'),
-                                ),
-                                true,
-                              );
+                                  productValue,
+                                  0.0,
+                                  double.parse(_costProduct.text
+                                      .replaceAll(RegExp(r','), '.')),
+                                  'EnvioProprio');
+
+                              // gainValue = AmazonCalc.gainValue(
+                              //   productValue,
+                              //   double.parse(_margemProduct.text),
+                              //   double.parse(
+                              //     _costProduct.text
+                              //         .replaceAll(RegExp(r','), '.'),
+                              //   ),
+                              //   true,
+                              // );
 
                               incomeValue =
                                   AmazonCalc.incomeValue(productValue, 0);
@@ -172,7 +182,7 @@ class _AmazonPage01State extends State<AmazonPage01> {
                             taxTotal = 0.0;
                             taxPercent = 0.0;
                             costProduct = 0.0;
-                            margemProduct = 0;
+                            margemProduct = 0.0;
                             _costProduct.clear();
                             _margemProduct.clear();
                           });

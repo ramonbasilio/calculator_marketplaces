@@ -1,7 +1,7 @@
 import 'package:calculator_marketplaces/src/calculus/amazon_calc.dart';
 import 'package:calculator_marketplaces/src/shared_preferences/amazon-SP.dart';
 import 'package:flutter/material.dart';
-import 'package:getwidget/getwidget.dart';
+
 
 class AmazonPage02 extends StatefulWidget {
   const AmazonPage02({super.key});
@@ -94,7 +94,10 @@ class _AmazonPage02State extends State<AmazonPage02> {
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('DBA Menor que R\$ 79'),
+        title: Image.asset(
+          'assets/amazon_logo.png',
+          width: 120,
+        ),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -201,7 +204,9 @@ class _AmazonPage02State extends State<AmazonPage02> {
                         ? const Text(
                             'ANUNCIO MAIOR QUE 79',
                             style: TextStyle(
-                                color: Colors.red, fontWeight: FontWeight.bold),
+                                color: Colors.red,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18),
                           )
                         : const SizedBox.shrink(),
                     SizedBox(
@@ -220,10 +225,10 @@ class _AmazonPage02State extends State<AmazonPage02> {
 
                               gainValue = AmazonCalc.gainValue(
                                   productValue,
-                                  double.parse(_margemProduct.text),
+                                  5.5,
                                   double.parse(_costProduct.text
                                       .replaceAll(RegExp(r','), '.')),
-                                  false);
+                                  'DBA<79');
 
                               incomeValue =
                                   AmazonCalc.incomeValue(productValue, 5.5);

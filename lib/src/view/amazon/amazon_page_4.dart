@@ -1,6 +1,5 @@
 import 'package:calculator_marketplaces/src/calculus/amazon_calc.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class AmazonPage04 extends StatefulWidget {
   const AmazonPage04({super.key});
@@ -35,7 +34,10 @@ class _AmazonPage04State extends State<AmazonPage04> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('FBA'),
+        title: Image.asset(
+          'assets/amazon_logo.png',
+          width: 120,
+        ),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -217,12 +219,10 @@ class _AmazonPage04State extends State<AmazonPage04> {
 
                               gainValue = AmazonCalc.gainValue(
                                   productValue,
-                                  double.parse(_margemProduct.text),
-                                  double.parse(
-                                    _costProduct.text
-                                        .replaceAll(RegExp(r','), '.'),
-                                  ),
-                                  false);
+                                  taxFBA!,
+                                  double.parse(_costProduct.text
+                                      .replaceAll(RegExp(r','), '.')),
+                                  'DBA>79ouFBA');
 
                               incomeValue =
                                   AmazonCalc.incomeValue(productValue, taxFBA!);

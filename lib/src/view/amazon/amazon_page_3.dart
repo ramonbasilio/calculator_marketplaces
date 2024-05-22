@@ -1,7 +1,6 @@
 import 'package:calculator_marketplaces/src/calculus/amazon_calc.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:getwidget/getwidget.dart';
 
 class AmazonPage03 extends StatefulWidget {
   const AmazonPage03({super.key});
@@ -13,21 +12,24 @@ class AmazonPage03 extends StatefulWidget {
 class _AmazonPage03State extends State<AmazonPage03> {
   final TextEditingController _costProduct = TextEditingController();
   final TextEditingController _margemProduct = TextEditingController();
-  int selectedRadio = 1;
+  int selectedRadio = 0;
   double tax = 20.45;
   double productValue = 0.0;
   double incomeValue = 0.0;
   double gainValue = 0.0;
   double taxTotal = 0.0;
   double taxPercent = 0.0;
-  final double bottomNavBarHeight = kBottomNavigationBarHeight;
+  bool alertProductValue = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: const Text('DBA Maior que R\$ 79'),
+          title: Image.asset(
+            'assets/amazon_logo.png',
+            width: 120,
+          ),
         ),
         body: SingleChildScrollView(
           child: Container(
@@ -116,48 +118,56 @@ class _AmazonPage03State extends State<AmazonPage03> {
                     ],
                   ),
                 ),
+                alertProductValue
+                    ? const Text(
+                        'ANUNCIO MENOR QUE 79',
+                        style: TextStyle(
+                            color: Colors.red,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18),
+                      )
+                    : const SizedBox.shrink(),
                 Container(
-                  height: 150,
-                  padding: const EdgeInsets.all(5),
+                  height: 100,
                   decoration: BoxDecoration(
                       border: Border.all(width: 0.3),
                       borderRadius: BorderRadius.circular(5)),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Text(
                         'Taxa DBA',
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      ListTile(
-                        minVerticalPadding: 0,
-                        contentPadding: const EdgeInsets.all(0),
-                        minLeadingWidth: 0,
-                        title: const Text('500g ~ 1kg R\$ 20,45'),
-                        leading: Radio(
-                            value: 1,
-                            groupValue: selectedRadio,
-                            onChanged: (value) {
-                              setState(() {
-                                selectedRadio = value!;
-                                tax = 20.45;
-                              });
-                            }),
+                      GFRadioListTile(
+                        padding: EdgeInsets.zero,
+                        radioColor: Colors.deepPurple,
+                        size: 20,
+                        title: const Text('Peso: 500g ~ 1kg   Taxa: R\$ 20,45'),
+                        value: 0,
+                        groupValue: selectedRadio,
+                        onChanged: (value) {
+                          setState(() {
+                            selectedRadio = value;
+                            tax = 20.45;
+                          });
+                        },
                       ),
-                      ListTile(
-                        minVerticalPadding: 0,
-                        contentPadding: const EdgeInsets.all(0),
-                        minLeadingWidth: 0,
-                        title: const Text('1kg ~ 2kg R\$ 21,45'),
-                        leading: Radio(
-                            value: 2,
-                            groupValue: selectedRadio,
-                            onChanged: (value) {
-                              setState(() {
-                                selectedRadio = value!;
-                                tax = 21.45;
-                              });
-                            }),
+                      GFRadioListTile(
+                        padding: EdgeInsets.zero,
+                        radioColor: Colors.deepPurple,
+                        size: 20,
+                        title:
+                            const Text('Peso: 1kg ~ 2kg      Taxa: R\$ 21,45'),
+                        value: 1,
+                        groupValue: selectedRadio,
+                        onChanged: (value) {
+                          setState(() {
+                            selectedRadio = value;
+                            tax = 21.45;
+                          });
+                        },
                       ),
                     ],
                   ),
@@ -208,12 +218,10 @@ class _AmazonPage03State extends State<AmazonPage03> {
 
                                 gainValue = AmazonCalc.gainValue(
                                     productValue,
-                                    double.parse(_margemProduct.text),
-                                    double.parse(
-                                      _costProduct.text
-                                          .replaceAll(RegExp(r','), '.'),
-                                    ),
-                                    false);
+                                    tax,
+                                    double.parse(_costProduct.text
+                                        .replaceAll(RegExp(r','), '.')),
+                                    'DBA>79ouFBA');
 
                                 incomeValue =
                                     AmazonCalc.incomeValue(productValue, tax);
@@ -224,6 +232,15 @@ class _AmazonPage03State extends State<AmazonPage03> {
                                 taxPercent = AmazonCalc.taxPercent(
                                     productValue, taxTotal);
                               });
+                              if (productValue < 79) {
+                                setState(() {
+                                  alertProductValue = true;
+                                });
+                              } else {
+                                setState(() {
+                                  alertProductValue = false;
+                                });
+                              }
                             }
                           },
                           child: const Text(
@@ -245,27 +262,34 @@ class _AmazonPage03State extends State<AmazonPage03> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Column(
+                      Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(
                             'Anúncio',
-                            style: TextStyle(fontSize: 20),
+                            style: TextStyle(
+                              fontSize: 20,
+                              color:
+                                  alertProductValue ? Colors.red : Colors.black,
+                              fontWeight: alertProductValue
+                                  ? FontWeight.bold
+                                  : FontWeight.normal,
+                            ),
                           ),
-                          Text(
+                          const Text(
                             'Receita',
                             style: TextStyle(fontSize: 20),
                           ),
-                          Text(
+                          const Text(
                             'Lucro',
                             style: TextStyle(fontSize: 20),
                           ),
-                          Text(
+                          const Text(
                             'Taxas R\$',
                             style: TextStyle(fontSize: 20),
                           ),
-                          Text(
+                          const Text(
                             'Taxas %',
                             style: TextStyle(fontSize: 20),
                           ),
@@ -277,7 +301,14 @@ class _AmazonPage03State extends State<AmazonPage03> {
                         children: [
                           Text(
                             'R\$ $productValue',
-                            style: const TextStyle(fontSize: 20),
+                            style: TextStyle(
+                              fontSize: 20,
+                              color:
+                                  alertProductValue ? Colors.red : Colors.black,
+                              fontWeight: alertProductValue
+                                  ? FontWeight.bold
+                                  : FontWeight.normal,
+                            ),
                           ),
                           Text(
                             'R\$ $incomeValue',
