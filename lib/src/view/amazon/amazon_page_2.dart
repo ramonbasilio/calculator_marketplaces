@@ -102,10 +102,7 @@ class _AmazonPage02State extends State<AmazonPage02> {
       body: SingleChildScrollView(
         child: Container(
           padding: const EdgeInsets.all(20),
-          height: MediaQuery.of(context).size.height -
-              MediaQuery.of(context).padding.top -
-              kToolbarHeight -
-              kBottomNavigationBarHeight,
+          height: MediaQuery.of(context).size.height,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             //INICIO

@@ -21,6 +21,8 @@ class _AmazonPage01State extends State<AmazonPage01> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
+      
       appBar: AppBar(
         centerTitle: true,
         title: Image.asset(
@@ -30,11 +32,8 @@ class _AmazonPage01State extends State<AmazonPage01> {
       ),
       body: SingleChildScrollView(
         child: Container(
+          height: 1200,
           padding: const EdgeInsets.all(20),
-          height: MediaQuery.of(context).size.height -
-              MediaQuery.of(context).padding.top -
-              kToolbarHeight -
-              kBottomNavigationBarHeight,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             //INICIO

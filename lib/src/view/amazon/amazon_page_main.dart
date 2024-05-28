@@ -1,3 +1,4 @@
+import 'package:calculator_marketplaces/src/view/amazon/amazon_page_1_teste.dart';
 import 'package:calculator_marketplaces/src/view/amazon/amazon_page_2.dart';
 import 'package:calculator_marketplaces/src/view/amazon/amazon_page_3.dart';
 import 'package:calculator_marketplaces/src/view/amazon/amazon_page_4.dart';
@@ -14,7 +15,7 @@ class AmazonPageMain extends StatefulWidget {
 class _AmazonPageMainState extends State<AmazonPageMain> {
   int indexCurrent = 0;
   final List<Widget> screens = [
-    const AmazonPage01(),
+    const AmazonPage01Teste(),
     const AmazonPage02(),
     const AmazonPage03(),
     const AmazonPage04(),
